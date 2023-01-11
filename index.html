@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>welcome to my space</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>welcome to my space</title>
+
+  <style>
+    .footer {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+    .blog {
+      color: #999;
+      font-size: 14px;
+    }
+    .section {
+      width: 80vw;
+      max-width: 600px;
+      margin: 30vh auto 0;
+    }
+    #author {
+      text-align: right;
+    }
+  </style>
 </head>
+
 <body>
-    <h1 style="text-align: center;padding-top: 200px;">Hello, welcome to my space!</h1>
+  <div class="section">
+    <h1 id="text"></h1>
+    <div id="author"></div>
+  </div>
+  <div class="footer">
+    <a class="blog" href="http://blog.siky.top/blog_v2/">BLOG</a>
+  </div>
+
+  <script>
+    fetch('https://v1.hitokoto.cn')
+      .then(res => res.json())
+      .then(data => {
+        const { hitokoto, from, from_who } = data;
+        document.getElementById('text').innerHTML = hitokoto;
+        document.getElementById('author').innerHTML = `—— ${from_who ? from_who : ''}「${from}」`;
+      });
+  </script>
 </body>
