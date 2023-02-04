@@ -5,37 +5,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>welcome to my space</title>
+  <title>SIKY的小站 - 四七爱波波</title>
 
   <style>
+    body {
+      margin: 0;
+      font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .menu {
+      padding: 0 1em;
+      height: 3em;
+      line-height: 3em;
+      display: flex;
+      justify-content: space-between;
+      text-align: right;
+    }
+
+    .menu .logo {
+      font-size: 1.2em;
+      font-weight: 500;
+      /* color: #646cff; */
+      color: #666;
+      text-decoration: inherit;
+      transition: .2s;
+    }
+
+    .menu .logo:hover {
+      color: #535bf2;
+    }
+
     .footer {
       position: fixed;
-      bottom: 20px;
+      bottom: 16px;
       width: 100%;
       text-align: center;
     }
-    .blog {
+
+    .beian {
       color: #999;
-      font-size: 14px;
+      font-size: 12px;
     }
+
     .section {
       width: 80vw;
       max-width: 600px;
       margin: 30vh auto 0;
     }
+
     #author {
       text-align: right;
     }
+
   </style>
 </head>
 
 <body>
+  <!-- <div class="menu"><a class="logo" href="http://blog.siky.top">BLOG</a></div> -->
   <div class="section">
     <h1 id="text"></h1>
     <div id="author"></div>
   </div>
   <div class="footer">
-    <a class="blog" href="http://blog.siky.top/blog_v2/">BLOG</a>
+    <a class="beian" href="https://beian.miit.gov.cn" target="_blank">粤ICP备17094151号-1</a>
   </div>
 
   <script>
