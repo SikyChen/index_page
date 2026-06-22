@@ -1,92 +1,631 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="http://blog.siky.top/balloon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="keywords" content="siky,siky的小站,SIKY,SIKY的小站,博客,个人,BLOG">
-  <meta name="description" content="SIKY的小站，分享技术生活">
+  <meta name="keywords" content="siky,siky hub,SIKY,博客,个人,BLOG">
+  <meta name="description" content="SIKY Hub - 个人技术与创意中心">
   <meta name="robots" content="all">
-  <title>SIKY的小站 - 四七爱波波</title>
+  <title>SIKY HUB</title>
 
   <style>
-    body {
+    :root {
+      --yellow: #E6B800;
+      --blue: #00A8D9;
+      --white: #F0F0F0;
+      --bg: #0077CC;
+    }
+
+    * {
       margin: 0;
-      font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-      font-synthesis: none;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-text-size-adjust: 100%;
-      background-color: #306fc6;
-      background-image: linear-gradient(90deg,rgba(60,10,30,.1) 3%,rgba(0,0,0,0) 3%),linear-gradient(360deg,rgba(60,10,30,.1) 3%,rgba(0,0,0,0) 3%);
-      background-size: 20px 20px;
-      background-position: center center;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .margin-right-20 {
-      margin-right: 20px;
+    body {
+      min-height: 100vh;
+      background-color: var(--bg);
+      font-family: 'Courier New', 'SF Mono', 'Menlo', monospace;
+      color: var(--white);
+      overflow-x: hidden;
     }
 
-    .menu {
-      padding: 0 1em;
-      height: 3em;
-      line-height: 3em;
-      display: flex;
-      justify-content: space-between;
-      text-align: right;
-    }
-
-    .menu .logo {
-      font-size: 1.2em;
-      font-weight: 500;
-      /* color: #646cff; */
-      color: #666;
-      text-decoration: inherit;
-      transition: .2s;
-    }
-
-    .menu .logo:hover {
-      color: #535bf2;
-    }
-
-    .section {
-      width: 80vw;
-      max-width: 600px;
-      margin: 30vh auto 0;
-      color: aliceblue;
-    }
-
-    #author {
-      text-align: right;
-    }
-
-    .footer {
+    /* 背景装饰 */
+    .bg-decor {
       position: fixed;
-      bottom: 16px;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* 菱形 - 大小错落 */
+    .diamond {
+      position: absolute;
+      border: 6px solid rgba(240, 240, 240, 0.15);
+      transform: rotate(45deg);
+    }
+
+    .diamond-1 { width: 30px; height: 30px; top: 8%; left: 72%; animation: moveRange1 12s ease-in-out infinite; }
+    .diamond-2 { width: 60px; height: 60px; top: 55%; left: 15%; animation: moveRange2 16s ease-in-out infinite 2s; }
+    .diamond-3 { width: 100px; height: 100px; top: 32%; left: 88%; animation: moveRange3 20s ease-in-out infinite 1s; }
+    .diamond-4 { width: 45px; height: 45px; top: 78%; left: 42%; animation: moveRange1 14s ease-in-out infinite 3s; }
+    .diamond-5 { width: 150px; height: 150px; top: 12%; left: 8%; animation: moveRange2 18s ease-in-out infinite 4s; }
+
+    /* 圆形 - 大小错落 */
+    .circle {
+      position: absolute;
+      border: 6px solid rgba(240, 240, 240, 0.12);
+      border-radius: 50%;
+    }
+
+    .circle-1 { width: 40px; height: 40px; top: 82%; left: 28%; animation: moveRange2 10s ease-in-out infinite; }
+    .circle-2 { width: 80px; height: 80px; top: 45%; left: 52%; animation: moveRange3 14s ease-in-out infinite 1s; }
+    .circle-3 { width: 120px; height: 120px; top: 20%; left: 35%; animation: moveRange1 12s ease-in-out infinite 2s; }
+    .circle-4 { width: 50px; height: 50px; top: 68%; left: 82%; animation: moveRange2 16s ease-in-out infinite 3s; }
+
+    /* 三角形 - 大小错落 */
+    .triangle {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: solid transparent;
+      border-right: solid transparent;
+      border-bottom: solid rgba(230, 184, 0, 0.15);
+    }
+
+    .triangle-1 { border-left-width: 18px; border-right-width: 18px; border-bottom-width: 30px; top: 42%; left: 5%; animation: moveRange3 15s ease-in-out infinite; }
+    .triangle-2 { border-left-width: 35px; border-right-width: 35px; border-bottom-width: 60px; top: 88%; left: 68%; animation: moveRange1 18s ease-in-out infinite 2s; }
+    .triangle-3 { border-left-width: 50px; border-right-width: 50px; border-bottom-width: 85px; top: 5%; left: 48%; animation: moveRange2 12s ease-in-out infinite 4s; }
+
+    /* 方块 - 大小错落 */
+    .square {
+      position: absolute;
+      border: 6px solid rgba(240, 240, 240, 0.12);
+    }
+
+    .square-1 { width: 25px; height: 25px; top: 60%; left: 75%; animation: squareMove1 14s linear infinite; }
+    .square-2 { width: 70px; height: 70px; top: 25%; left: 62%; animation: squareMove2 20s linear infinite; }
+    .square-3 { width: 110px; height: 110px; top: 48%; left: 22%; animation: squareMove3 16s linear infinite; }
+
+    /* 横线 */
+    .line-decor {
+      position: absolute;
+      height: 4px;
+      background: rgba(240, 240, 240, 0.1);
+    }
+
+    .line-decor-1 { width: 100px; top: 28%; left: 0; animation: slideRight 12s linear infinite; }
+    .line-decor-2 { width: 150px; top: 58%; right: 0; animation: slideLeft 16s linear infinite; }
+    .line-decor-3 { width: 80px; top: 92%; left: 0; animation: slideRight 20s linear infinite 4s; }
+
+    /* 移动范围动画 */
+    @keyframes moveRange1 {
+      0%, 100% { transform: rotate(0deg) translate(0, 0); }
+      25% { transform: rotate(90deg) translate(40px, -30px); }
+      50% { transform: rotate(180deg) translate(0, -50px); }
+      75% { transform: rotate(270deg) translate(-40px, -20px); }
+    }
+
+    @keyframes moveRange2 {
+      0%, 100% { transform: rotate(0deg) translateY(0) translateX(0); }
+      25% { transform: rotate(90deg) translateY(-40px) translateX(30px); }
+      50% { transform: rotate(180deg) translateY(-20px) translateX(-40px); }
+      75% { transform: rotate(270deg) translateY(30px) translateX(20px); }
+    }
+
+    @keyframes moveRange3 {
+      0%, 100% { transform: rotate(0deg) translateY(0) translateX(0); }
+      33% { transform: rotate(120deg) translateY(-60px) translateX(-40px); }
+      66% { transform: rotate(240deg) translateY(40px) translateX(50px); }
+    }
+
+    /* 方块专用 - 持续旋转+移动 */
+    @keyframes squareMove1 {
+      0% { transform: rotate(0deg) translate(0, 0); }
+      25% { transform: rotate(90deg) translate(40px, -30px); }
+      50% { transform: rotate(180deg) translate(0, -50px); }
+      75% { transform: rotate(270deg) translate(-40px, -20px); }
+      100% { transform: rotate(360deg) translate(0, 0); }
+    }
+
+    @keyframes squareMove2 {
+      0% { transform: rotate(0deg) translateY(0) translateX(0); }
+      33% { transform: rotate(120deg) translateY(-60px) translateX(-40px); }
+      66% { transform: rotate(240deg) translateY(40px) translateX(50px); }
+      100% { transform: rotate(360deg) translateY(0) translateX(0); }
+    }
+
+    @keyframes squareMove3 {
+      0% { transform: rotate(0deg) translateY(0) translateX(0); }
+      25% { transform: rotate(90deg) translateY(-40px) translateX(30px); }
+      50% { transform: rotate(180deg) translateY(-20px) translateX(-40px); }
+      75% { transform: rotate(270deg) translateY(30px) translateX(20px); }
+      100% { transform: rotate(360deg) translateY(0) translateX(0); }
+    }
+
+    @keyframes slideRight {
+      from { transform: translateX(-200px); }
+      to { transform: translateX(calc(100vw + 200px)); }
+    }
+
+    @keyframes slideLeft {
+      from { transform: translateX(calc(100vw + 200px)); }
+      to { transform: translateX(-200px); }
+    }
+
+    /* 主内容区 */
+    .main-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 60px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* 标题 */
+    .site-title {
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 12px;
+      margin-bottom: 60px;
       text-align: center;
     }
 
-    .footer a {
-      color: #ddd;
+    .title-line {
+      width: 100%;
+      height: 8px;
+      background: var(--yellow);
+      margin-bottom: 60px;
     }
 
+    /* 一言区 */
+    .quote-section {
+      width: 100%;
+      margin-bottom: 50px;
+    }
+
+    .quote-box {
+      position: relative;
+      border: 5px solid var(--white);
+      background: rgba(240, 240, 240, 0.08);
+      padding: 50px 60px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .quote-box::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 55px 55px;
+      border-color: transparent transparent var(--yellow) transparent;
+    }
+
+    .quote-box::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 35px;
+      height: 35px;
+      background: var(--blue);
+    }
+
+    #text {
+      font-size: 3.2rem;
+      line-height: 1.5;
+      color: var(--white);
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-align: center;
+      max-height: 200px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+
+    #author {
+      color: var(--blue);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-top: 25px;
+      transition: opacity 0.3s ease;
+    }
+
+    /* 卡片行 */
+    .cards-row {
+      display: flex;
+      gap: 30px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .card {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      color: var(--white);
+      padding: 35px 40px 30px;
+      border: 5px solid;
+      background: rgba(240, 240, 240, 0.1);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .card-wide { flex: 0 0 55%; }
+    .card-narrow { flex: 0 0 calc(45% - 30px); }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 40px 40px 0;
+      z-index: 2;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      width: 14px;
+      height: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .card h3 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      letter-spacing: 4px;
+    }
+
+    .card p {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-bottom: 0;
+    }
+
+    .arrow {
+      position: absolute;
+      right: 35px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover .arrow { opacity: 1; }
+
+    .card.yellow {
+      border-color: var(--yellow);
+      background: rgba(230, 184, 0, 0.12);
+    }
+
+    .card.yellow::before {
+      border-color: transparent var(--yellow) transparent transparent;
+    }
+
+    .card.yellow::after {
+      background: var(--yellow);
+    }
+
+    .card.yellow h3 {
+      color: var(--yellow);
+    }
+
+    .card.yellow:hover {
+      background: rgba(230, 184, 0, 0.18);
+      transform: translateY(-8px);
+    }
+
+    .card.yellow:hover .arrow {
+      color: var(--yellow);
+      transform: translateY(-50%) translateX(8px);
+    }
+
+    .card.blue {
+      border-color: var(--white);
+      background: rgba(240, 240, 240, 0.1);
+    }
+
+    .card.blue::before {
+      border-color: transparent var(--white) transparent transparent;
+    }
+
+    .card.blue::after {
+      background: var(--blue);
+    }
+
+    .card.blue h3 {
+      color: var(--white);
+    }
+
+    .card.blue:hover {
+      background: rgba(240, 240, 240, 0.18);
+      transform: translateY(-8px);
+    }
+
+    .card.blue:hover .arrow {
+      color: var(--white);
+      transform: translateY(-50%) translateX(8px);
+    }
+
+    .lines-row {
+      display: flex;
+      gap: 30px;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    .line { height: 5px; }
+
+    .line-yellow {
+      background: var(--yellow);
+    }
+
+    .line-white {
+      background: rgba(240, 240, 240, 0.5);
+    }
+
+    .bottom-decor {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+
+    .hex-decor {
+      font-size: 0.9rem;
+      color: var(--white);
+      opacity: 0.5;
+      letter-spacing: 5px;
+    }
+
+    /* 弹窗样式 */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 50, 100, 0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg);
+      border: 5px solid var(--white);
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      max-width: 400px;
+    }
+
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 40px 40px;
+      border-color: transparent transparent var(--yellow) transparent;
+    }
+
+    .modal-content::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 25px;
+      height: 25px;
+      background: var(--blue);
+    }
+
+    .modal-qr {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 20px;
+      border: 3px solid var(--white);
+    }
+
+    .modal-text {
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: var(--white);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-weight: 900;
+    }
+
+    .modal-close:hover {
+      color: var(--yellow);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .site-title, .title-line {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .title-line { animation-delay: 0.15s; }
+    .quote-section { opacity: 0; animation: fadeInUp 0.7s ease forwards 0.3s; }
+
+    .cards-row:nth-child(3) .card:nth-child(1) {
+      opacity: 0;
+      animation: slideInLeft 0.6s ease forwards 0.5s;
+    }
+
+    .cards-row:nth-child(3) .card:nth-child(2) {
+      opacity: 0;
+      animation: slideInRight 0.6s ease forwards 0.6s;
+    }
+
+    .cards-row:nth-child(5) .card:nth-child(1) {
+      opacity: 0;
+      animation: slideInLeft 0.6s ease forwards 0.7s;
+    }
+
+    .cards-row:nth-child(5) .card:nth-child(2) {
+      opacity: 0;
+      animation: slideInRight 0.6s ease forwards 0.8s;
+    }
+
+    @media (max-width: 768px) {
+      .main-content { padding: 40px 20px; }
+      .site-title { font-size: 3rem; letter-spacing: 6px; }
+      .quote-box { height: 240px; padding: 35px 30px; }
+      #text { font-size: 2rem; }
+      .cards-row { flex-direction: column; gap: 20px; }
+      .card-wide, .card-narrow { flex: none; width: 100%; }
+      .lines-row { flex-direction: column; gap: 20px; }
+      .line { width: 100% !important; }
+      .card h3 { font-size: 1.4rem; }
+    }
   </style>
 </head>
 
 <body>
-  <!-- <div class="menu"><a class="logo" href="http://blog.siky.top">BLOG</a></div> -->
-  <div class="section">
-    <h1 id="text"></h1>
-    <div id="author"></div>
+  <div class="bg-decor">
+    <div class="diamond diamond-1"></div>
+    <div class="diamond diamond-2"></div>
+    <div class="diamond diamond-3"></div>
+    <div class="diamond diamond-4"></div>
+    <div class="diamond diamond-5"></div>
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="circle circle-4"></div>
+    <div class="triangle triangle-1"></div>
+    <div class="triangle triangle-2"></div>
+    <div class="triangle triangle-3"></div>
+    <div class="square square-1"></div>
+    <div class="square square-2"></div>
+    <div class="square square-3"></div>
+    <div class="line-decor line-decor-1"></div>
+    <div class="line-decor line-decor-2"></div>
+    <div class="line-decor line-decor-3"></div>
   </div>
-  <div class="footer">
-    <a class="blog margin-right-20" href="http://blog.siky.top" target="_blank">MY BLOG</a>
-    <a class="beian" href="https://beian.miit.gov.cn" target="_blank">粤ICP备17094151号-1</a>
-  </div>
+
+  <main class="main-content">
+    <h1 class="site-title">SIKY_HUB</h1>
+    <div class="title-line"></div>
+
+    <section class="quote-section">
+      <div class="quote-box">
+        <p id="text"></p>
+        <p id="author"></p>
+      </div>
+    </section>
+
+    <div class="cards-row">
+      <a href="https://blog.siky.top" target="_blank" class="card card-wide yellow">
+        <h3>B L O G</h3>
+        <p>技术与生活的记录</p>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://hono-vite.siky.top" target="_blank" class="card card-narrow blue">
+        <h3>HONO + VITE</h3>
+        <p>现代框架的实践</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <div class="lines-row">
+      <span class="line line-yellow" style="width: 55%"></span>
+      <span class="line line-white" style="width: calc(45% - 30px)"></span>
+    </div>
+
+    <div class="cards-row">
+      <div class="card card-narrow blue" onclick="openModal()" style="cursor: pointer;">
+        <h3>QR CLOCK</h3>
+        <p>时间的另一种形态</p>
+        <span class="arrow">→</span>
+      </div>
+      <a href="https://quiet-smoke.siky.top" target="_blank" class="card card-wide yellow">
+        <h3>轻 烟</h3>
+        <p>极简 Markdown 编辑器</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="modal-overlay" id="qrModal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <img src="data:image/png;base64,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" alt="QR Code" class="modal-qr">
+        <p class="modal-text">扫码查看当前时间</p>
+      </div>
+    </div>
+
+    <div class="lines-row">
+      <span class="line line-white" style="width: calc(45% - 30px)"></span>
+      <span class="line line-yellow" style="width: 55%"></span>
+    </div>
+
+    <div class="bottom-decor">
+      <span class="hex-decor">0x7B 0x2E 0x48 0x55 0x42</span>
+    </div>
+  </main>
 
   <script>
     function updateHitokoto() {
@@ -94,11 +633,38 @@
         .then(res => res.json())
         .then(data => {
           const { hitokoto, from, from_who } = data;
-          document.getElementById('text').innerHTML = hitokoto;
-          document.getElementById('author').innerHTML = `—— ${from_who ? from_who : ''}「${from}」`;
+          const textEl = document.getElementById('text');
+          const authorEl = document.getElementById('author');
+          
+          textEl.style.opacity = '0';
+          authorEl.style.opacity = '0';
+          
+          setTimeout(() => {
+            textEl.innerHTML = hitokoto;
+            authorEl.innerHTML = `—— ${from_who ? from_who : ''}「${from}」`;
+            textEl.style.opacity = '1';
+            authorEl.style.opacity = '1';
+          }, 300);
         });
     }
+
+    function openModal() {
+      document.getElementById('qrModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('qrModal').classList.remove('active');
+    }
+
+    document.getElementById('qrModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
     updateHitokoto();
     setInterval(updateHitokoto, 10000);
   </script>
 </body>
+
+</html>
