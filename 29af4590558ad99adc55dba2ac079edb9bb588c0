@@ -1,0 +1,43 @@
+index.html
+  148b58eb1a54eb9d 2,9-10,15-22,24-166,168-173,176-181,183,186-190,193-220,223-245,249-253,256-355,358-382,384-414,416-417,419-433,435-458,461-465,468-530,532-543,548-566,569-629,636-647,650-664,669-670
+  h_16722c6091d978 12,182
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.3",
+  "base_commit_sha": "29af4590558ad99adc55dba2ac079edb9bb588c0",
+  "prompts": {
+    "148b58eb1a54eb9d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1129fe350ffe6YLdpc3nFIMTcJ",
+        "model": "opencode/mimo-v2.5-free"
+      },
+      "human_author": "chensiqi <chensiqi@cvte.com>",
+      "messages": [],
+      "total_additions": 1588,
+      "total_deletions": 1035,
+      "accepted_lines": 631,
+      "overriden_lines": 2,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/00157026cf2c2e95e9f0079ff90473385713a803ba9e9245847232270e391e83"
+    },
+    "fbd0a7434a0e56c7": {
+      "agent_id": {
+        "tool": "known_human",
+        "id": "known_human_session",
+        "model": "unknown"
+      },
+      "human_author": "chensiqi <chensiqi@cvte.com>",
+      "messages": [],
+      "total_additions": 22,
+      "total_deletions": 9,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_16722c6091d978": {
+      "author": "chensiqi"
+    }
+  }
+}
